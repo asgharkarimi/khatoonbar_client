@@ -9,4 +9,5 @@ class AppLinks {
   static const String vehicles = "$baseUrl/vehicles.php";
   static const String transportRelations = "$baseUrl/transport_relations.php";
   static const String paymentTypes = "$baseUrl/payment_types.php";
+  static const String imageBaseUrl = "http://192.168.192.166/khatoonbar/uploads/";
 } 

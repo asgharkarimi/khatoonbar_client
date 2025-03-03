@@ -122,20 +122,6 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   _buildDashboardCard(
                     context,
-                    'افزودن رابطه حمل و نقل',
-                    Icons.directions_car,
-                    Color(0xFF512DA8), // Deep Purple Accent
-                    AddTransportRelationScreen(),
-                  ),
-                  _buildDashboardCard(
-                    context,
-                    'گزارش گیری',
-                    Icons.assessment,
-                    Color(0xFF1976D2), // Blue
-                    ReportingScreen(),
-                  ),
-                  _buildDashboardCard(
-                    context,
                     'گزارش گیری درامدها',
                     Icons.trending_up,
                     Color(0xFF009688), // Teal
