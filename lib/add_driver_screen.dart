@@ -26,7 +26,8 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
   Future<void> _pickImage(String type) async {
     final ImagePicker _picker = ImagePicker();
     try {
-      final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      final XFile? pickedFile =
+          await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         File imageFile = File(pickedFile.path);
 
@@ -42,7 +43,7 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error picking image: $e'),
-          backgroundColor: Colors.red,
+          backgroundColor: AppTheme.dangerColor,
         ),
       );
     }
@@ -83,19 +84,29 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
         print("Response Body: ${respStr}");
         if (response.statusCode == 201) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('راننده با موفقیت اضافه شد')),
+            SnackBar(
+              content: Text('راننده با موفقیت اضافه شد'),
+              backgroundColor: AppTheme.successColor,
+            ),
           );
           Navigator.pop(context);
         } else {
-          print("Error Response: ${response.statusCode} - ${response.reasonPhrase}");
+          print(
+              "Error Response: ${response.statusCode} - ${response.reasonPhrase}");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('اضافه کردن راننده با خطا مواجه شد')),
+            SnackBar(
+              content: Text('اضافه کردن راننده با خطا مواجه شد'),
+              backgroundColor: AppTheme.dangerColor,
+            ),
           );
         }
       } catch (e) {
         print("Exception: $e");
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: AppTheme.dangerColor,
+          ),
         );
       }
     }
@@ -107,7 +118,8 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('افزودن راننده', style: TextStyle(color: AppTheme.whiteColor)),
+          title: Text('افزودن راننده',
+              style: TextStyle(color: AppTheme.whiteColor)),
           backgroundColor: AppTheme.primaryColor,
           centerTitle: true,
         ),
@@ -119,13 +131,9 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
               children: <Widget>[
                 TextFormField(
                   controller: _firstNameController,
-                  decoration: InputDecoration(
+                  decoration: AppTheme.getInputDecoration(
                     labelText: 'نام',
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
+                    prefixIcon: Icons.person,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -137,13 +145,9 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _lastNameController,
-                  decoration: InputDecoration(
+                  decoration: AppTheme.getInputDecoration(
                     labelText: 'نام خانوادگی',
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
+                    prefixIcon: Icons.person_outline,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -155,13 +159,9 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _nationalCodeController,
-                  decoration: InputDecoration(
+                  decoration: AppTheme.getInputDecoration(
                     labelText: 'کد ملی',
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
+                    prefixIcon: Icons.credit_card,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -173,13 +173,9 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _phoneNumberController,
-                  decoration: InputDecoration(
+                  decoration: AppTheme.getInputDecoration(
                     labelText: 'شماره تلفن',
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
+                    prefixIcon: Icons.phone,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -191,13 +187,9 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
                 SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
-                  decoration: InputDecoration(
+                  decoration: AppTheme.getInputDecoration(
                     labelText: 'رمز عبور',
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
+                    prefixIcon: Icons.lock,
                   ),
                   obscureText: true,
                   validator: (value) {
@@ -210,6 +202,10 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => _pickImage('nationalCard'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryColor,
+                    foregroundColor: AppTheme.whiteColor,
+                  ),
                   child: Text('انتخاب تصویر کارت ملی'),
                 ),
                 _nationalCardImageFile != null
@@ -218,6 +214,10 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () => _pickImage('license'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryColor,
+                    foregroundColor: AppTheme.whiteColor,
+                  ),
                   child: Text('انتخاب تصویر گواهینامه'),
                 ),
                 _licenseImageFile != null
@@ -239,4 +239,4 @@ class _AddDriverScreenState extends State<AddDriverScreen> {
       ),
     );
   }
-} 
+}

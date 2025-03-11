@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart'; // Import the image picker pack
 import 'app_links.dart';
 import 'app_theme.dart';
 import 'dart:ui' as ui;
-
+import 'text_input_style.dart';
 
 class AddExpenseScreen extends StatefulWidget {
   const AddExpenseScreen({Key? key}) : super(key: key);
@@ -74,7 +74,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   Future<void> _pickImage(String type) async {
     final ImagePicker _picker = ImagePicker();
     try {
-      final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      final XFile? pickedFile =
+          await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         File imageFile = File(pickedFile.path);
         setState(() {
@@ -118,136 +119,142 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
         backgroundColor: AppTheme.primaryColor,
         centerTitle: true,
       ),
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: AppTheme.lightColor,
       body: Directionality(
         textDirection: ui.TextDirection.rtl,
-        child: _isLoading ? Center(child: CircularProgressIndicator()) : Padding(
-          padding: EdgeInsets.fromLTRB(16, 16, 16, 80), // Added bottom padding
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  _buildCargoDropdown(),
-                  SizedBox(height: 20),
-                  _buildCostField(
-                    controller: _billOfLadingCostController,
-                    label: 'هزینه بارنامه',
-                    icon: Icons.receipt,
-                    onImagePressed: () => _pickImage('billOfLading'),
-                    image: _billOfLadingImage,
-                  ),
-                  SizedBox(height: 20),
-                  _buildCostField(
-                    controller: _highwayTollController,
-                    label: 'عوارض جاده ای',
-                    icon: Icons.local_shipping,
-                    onImagePressed: () => _pickImage('highwayToll'),
-                    image: _highwayTollImage,
-                  ),
-                  SizedBox(height: 20),
-                  _buildCostField(
-                    controller: _dieselCostController,
-                    label: 'هزینه گازوئیل',
-                    icon: Icons.local_gas_station,
-                    onImagePressed: () => _pickImage('dieselCost'),
-                    image: _dieselCostImage,
-                  ),
-                  SizedBox(height: 20),
-                  _buildCostField(
-                    controller: _loadingTipController,
-                    label: 'انعام بارگیری',
-                    icon: Icons.file_upload,
-                    onImagePressed: () => _pickImage('loadingTip'),
-                    image: _loadingTipImage,
-                  ),
-                  SizedBox(height: 20),
-                  _buildCostField(
-                    controller: _unloadingTipController,
-                    label: 'انعام تخلیه',
-                    icon: Icons.file_download,
-                    onImagePressed: () => _pickImage('unloadingTip'),
-                    image: _unloadingTipImage,
-                  ),
-                  SizedBox(height: 20),
-                  _buildCostField(
-                    controller: _disinfectionCostController,
-                    label: 'هزینه ضد عفونی',
-                    icon: Icons.local_hospital,
-                    onImagePressed: () => _pickImage('disinfectionCost'),
-                    image: _disinfectionCostImage,
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        _showOtherCosts = !_showOtherCosts;
-                      });
-                    },
-                    child: Text(_showOtherCosts ? 'بستن سایر هزینه ها' : 'نمایش سایر هزینه ها'),
-                  ),
-                  if (_showOtherCosts) ...[
-                    SizedBox(height: 20),
-                    _buildCostField(
-                      controller: _otherCost1Controller,
-                      label: 'سایر هزینه 1',
-                      icon: Icons.monetization_on,
-                      onImagePressed: () => _pickImage('otherCost1'),
-                      image: _otherCostImage1,
+        child: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(color: AppTheme.primaryColor))
+            : Padding(
+                padding:
+                    EdgeInsets.fromLTRB(16, 16, 16, 80), // Added bottom padding
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        _buildCargoDropdown(),
+                        SizedBox(height: 20),
+                        _buildCostField(
+                          controller: _billOfLadingCostController,
+                          label: 'هزینه بارنامه',
+                          icon: Icons.receipt,
+                          onImagePressed: () => _pickImage('billOfLading'),
+                          image: _billOfLadingImage,
+                        ),
+                        SizedBox(height: 20),
+                        _buildCostField(
+                          controller: _highwayTollController,
+                          label: 'عوارض جاده ای',
+                          icon: Icons.local_shipping,
+                          onImagePressed: () => _pickImage('highwayToll'),
+                          image: _highwayTollImage,
+                        ),
+                        SizedBox(height: 20),
+                        _buildCostField(
+                          controller: _dieselCostController,
+                          label: 'هزینه گازوئیل',
+                          icon: Icons.local_gas_station,
+                          onImagePressed: () => _pickImage('dieselCost'),
+                          image: _dieselCostImage,
+                        ),
+                        SizedBox(height: 20),
+                        _buildCostField(
+                          controller: _loadingTipController,
+                          label: 'انعام بارگیری',
+                          icon: Icons.file_upload,
+                          onImagePressed: () => _pickImage('loadingTip'),
+                          image: _loadingTipImage,
+                        ),
+                        SizedBox(height: 20),
+                        _buildCostField(
+                          controller: _unloadingTipController,
+                          label: 'انعام تخلیه',
+                          icon: Icons.file_download,
+                          onImagePressed: () => _pickImage('unloadingTip'),
+                          image: _unloadingTipImage,
+                        ),
+                        SizedBox(height: 20),
+                        _buildCostField(
+                          controller: _disinfectionCostController,
+                          label: 'هزینه ضد عفونی',
+                          icon: Icons.local_hospital,
+                          onImagePressed: () => _pickImage('disinfectionCost'),
+                          image: _disinfectionCostImage,
+                        ),
+                        SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _showOtherCosts = !_showOtherCosts;
+                            });
+                          },
+                          child: Text(_showOtherCosts
+                              ? 'بستن سایر هزینه ها'
+                              : 'نمایش سایر هزینه ها'),
+                        ),
+                        if (_showOtherCosts) ...[
+                          SizedBox(height: 20),
+                          _buildCostField(
+                            controller: _otherCost1Controller,
+                            label: 'سایر هزینه 1',
+                            icon: Icons.monetization_on,
+                            onImagePressed: () => _pickImage('otherCost1'),
+                            image: _otherCostImage1,
+                          ),
+                          SizedBox(height: 20),
+                          _buildCostField(
+                            controller: _otherCost2Controller,
+                            label: 'سایر هزینه 2',
+                            icon: Icons.monetization_on,
+                            onImagePressed: () => _pickImage('otherCost2'),
+                            image: _otherCostImage2,
+                          ),
+                          SizedBox(height: 20),
+                          _buildCostField(
+                            controller: _otherCost3Controller,
+                            label: 'سایر هزینه 3',
+                            icon: Icons.monetization_on,
+                            onImagePressed: () => _pickImage('otherCost3'),
+                            image: _otherCostImage3,
+                          ),
+                          SizedBox(height: 20),
+                          _buildCostField(
+                            controller: _otherCost4Controller,
+                            label: 'سایر هزینه 4',
+                            icon: Icons.monetization_on,
+                            onImagePressed: () => _pickImage('otherCost4'),
+                            image: _otherCostImage4,
+                          ),
+                          SizedBox(height: 20),
+                          _buildCostField(
+                            controller: _otherCost5Controller,
+                            label: 'سایر هزینه 5',
+                            icon: Icons.monetization_on,
+                            onImagePressed: () => _pickImage('otherCost5'),
+                            image: _otherCostImage5,
+                          ),
+                        ],
+                        SizedBox(height: 30),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppTheme.primaryColor,
+                            foregroundColor: Colors.white,
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            textStyle: TextStyle(fontSize: 18),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: _submitForm,
+                          child: Text('ثبت هزینه'),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 20),
-                    _buildCostField(
-                      controller: _otherCost2Controller,
-                      label: 'سایر هزینه 2',
-                      icon: Icons.monetization_on,
-                      onImagePressed: () => _pickImage('otherCost2'),
-                      image: _otherCostImage2,
-                    ),
-                    SizedBox(height: 20),
-                    _buildCostField(
-                      controller: _otherCost3Controller,
-                      label: 'سایر هزینه 3',
-                      icon: Icons.monetization_on,
-                      onImagePressed: () => _pickImage('otherCost3'),
-                      image: _otherCostImage3,
-                    ),
-                    SizedBox(height: 20),
-                    _buildCostField(
-                      controller: _otherCost4Controller,
-                      label: 'سایر هزینه 4',
-                      icon: Icons.monetization_on,
-                      onImagePressed: () => _pickImage('otherCost4'),
-                      image: _otherCostImage4,
-                    ),
-                    SizedBox(height: 20),
-                    _buildCostField(
-                      controller: _otherCost5Controller,
-                      label: 'سایر هزینه 5',
-                      icon: Icons.monetization_on,
-                      onImagePressed: () => _pickImage('otherCost5'),
-                      image: _otherCostImage5,
-                    ),
-                  ],
-                  SizedBox(height: 30),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppTheme.primaryColor,
-                      foregroundColor: Colors.white,
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      textStyle: TextStyle(fontSize: 18),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: _submitForm,
-                    child: Text('ثبت هزینه'),
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -255,17 +262,16 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   Widget _buildCargoDropdown() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppTheme.whiteColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade400),
+        border: Border.all(color: AppTheme.secondaryColor.withOpacity(0.4)),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: DropdownButtonFormField<String>(
-          decoration: InputDecoration(
+          decoration: TextInputStyle.getDropdownDecoration(
             labelText: 'شناسه بار',
-            border: InputBorder.none,
-            prefixIcon: Icon(Icons.local_shipping, color: AppTheme.primaryColor),
+            prefixIcon: Icons.local_shipping,
           ),
           value: _selectedCargoId,
           items: _cargos.map((cargo) {
@@ -298,9 +304,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     return Container(
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppTheme.whiteColor,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade400),
+        border: Border.all(color: AppTheme.secondaryColor.withOpacity(0.4)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -311,12 +317,9 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
             controller: controller,
             keyboardType: TextInputType.number,
             style: TextStyle(fontFamily: null),
-            decoration: InputDecoration(
-              hintText: 'مقدار را وارد کنید',
-              prefixIcon: Icon(icon, color: AppTheme.primaryColor),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
-              filled: true,
-              fillColor: Colors.grey.shade100,
+            decoration: TextInputStyle.getInputDecoration(
+              labelText: 'مقدار را وارد کنید',
+              prefixIcon: icon,
             ),
             validator: (value) {
               return null;
@@ -329,9 +332,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
               width: double.infinity,
               height: 120,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade400),
+                border:
+                    Border.all(color: AppTheme.secondaryColor.withOpacity(0.4)),
                 borderRadius: BorderRadius.circular(8),
-                color: Colors.grey.shade50,
+                color: AppTheme.lightColor,
               ),
               child: image != null
                   ? Image.file(image!, fit: BoxFit.cover)
@@ -339,8 +343,10 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.camera_alt, size: 32, color: Colors.grey.shade600),
-                          Text("انتخاب تصویر", style: TextStyle(color: Colors.grey.shade600)),
+                          Icon(Icons.camera_alt,
+                              size: 32, color: AppTheme.secondaryColor),
+                          Text("انتخاب تصویر",
+                              style: TextStyle(color: AppTheme.secondaryColor)),
                         ],
                       ),
                     ),
@@ -358,7 +364,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
       var request = http.MultipartRequest('POST', Uri.parse(AppLinks.expenses));
-      request.fields['CargoID'] = _selectedCargoId ?? ''; // Use empty string if null
+      request.fields['CargoID'] =
+          _selectedCargoId ?? ''; // Use empty string if null
       request.fields['BillOfLadingCost'] = _billOfLadingCostController.text;
       request.fields['HighwayToll'] = _highwayTollController.text;
       request.fields['DieselCost'] = _dieselCostController.text;

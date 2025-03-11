@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'text_input_style.dart';
 
 class AppTheme {
   static const Color primaryColor = Color(0xFF007BFF);
@@ -16,7 +17,7 @@ class AppTheme {
   static ThemeData get theme {
     return ThemeData(
       primarySwatch: Colors.green,
-   
+
       // Persian font
       textTheme: TextTheme(
         bodyLarge: TextStyle(fontSize: 16, color: Colors.black),
@@ -41,16 +42,48 @@ class AppTheme {
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: whiteColor,
+        contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Color(0xff2E7D32)),
+          borderSide: BorderSide(color: secondaryColor.withOpacity(0.2)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: secondaryColor.withOpacity(0.2)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Color(0xff2E7D32), width: 2),
+          borderSide: BorderSide(color: primaryColor, width: 2),
         ),
-        contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: dangerColor, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: dangerColor, width: 2),
+        ),
+        labelStyle: TextStyle(color: secondaryColor),
+        hintStyle: TextStyle(color: secondaryColor.withOpacity(0.7)),
+        prefixIconColor: primaryColor,
+        suffixIconColor: secondaryColor,
       ),
+    );
+  }
+
+  static InputDecoration getInputDecoration({
+    required String labelText,
+    IconData? prefixIcon,
+    Widget? suffix,
+    String? hintText,
+  }) {
+    return TextInputStyle.getInputDecoration(
+      labelText: labelText,
+      prefixIcon: prefixIcon,
+      suffix: suffix,
+      hintText: hintText,
     );
   }
 }

@@ -71,7 +71,7 @@ class _AddCargoScreenState extends State<AddCargoScreen> {
 
   Future<void> _fetchVehicles() async {
     final response = await http.get(Uri.parse(AppLinks.vehicles));
-    print(response.body);// Replace with your vehicles API endpoint
+    print(response.body); // Replace with your vehicles API endpoint
     if (!mounted) return; // Check if the widget is still in the tree
     if (response.statusCode == 200) {
       setState(() {
@@ -87,11 +87,12 @@ class _AddCargoScreenState extends State<AddCargoScreen> {
 
   Future<void> _fetchCargoTypes() async {
     final response = await http.get(Uri.parse(AppLinks.cargoTypes));
-    print(response.body);// Re// Replace with your cargo types API endpoint
+    print(response.body); // Re// Replace with your cargo types API endpoint
     if (!mounted) return; // Check if the widget is still in the tree
     if (response.statusCode == 200) {
       setState(() {
-        _cargoTypes = List<Map<String, dynamic>>.from(jsonDecode(response.body));
+        _cargoTypes =
+            List<Map<String, dynamic>>.from(jsonDecode(response.body));
       });
     } else {
       if (!mounted) return; // Check if the widget is still in the tree
@@ -101,13 +102,15 @@ class _AddCargoScreenState extends State<AddCargoScreen> {
     }
   }
 
-  Future<void> _fetchPaymentTypes() async { // Added
+  Future<void> _fetchPaymentTypes() async {
+    // Added
     final response = await http.get(Uri.parse(AppLinks.paymentTypes));
     print(response.body);
     if (!mounted) return; // Check if the widget is still in the tree
     if (response.statusCode == 200) {
       setState(() {
-        _paymentTypes = List<Map<String, dynamic>>.from(jsonDecode(response.body));
+        _paymentTypes =
+            List<Map<String, dynamic>>.from(jsonDecode(response.body));
       });
     } else {
       if (!mounted) return; // Check if the widget is still in the tree
@@ -125,7 +128,7 @@ class _AddCargoScreenState extends State<AddCargoScreen> {
         body: jsonEncode({
           "VehicleID": _selectedVehicleId,
           "DriverID": _selectedDriverId,
-          "CargoTypeID":  _selectedCargoTypeId,
+          "CargoTypeID": _selectedCargoTypeId,
           "Origin": _originController.text,
           "Destination": _destinationController.text,
           "ShippingDate": _shippingDateController.text,
@@ -161,206 +164,229 @@ class _AddCargoScreenState extends State<AddCargoScreen> {
         child: _isLoading // Show loading indicator while data is loading
             ? Center(child: CircularProgressIndicator())
             : SingleChildScrollView(
-          padding: EdgeInsets.fromLTRB(16, 16, 16, 80), // Added bottom padding
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Driver ID Dropdown
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    labelText: "شناسه راننده",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  value: _selectedDriverId,
-                  items: _drivers.map((driver) {
-                    return DropdownMenuItem<String>(
-                      value: driver['DriverID'].toString(),
-                      child: Text('${driver['FirstName'] ?? ''} ${driver['LastName'] ?? ''}'), // Display driver name
-                    );
-                  }).toList(),
-                  onChanged: (value) => setState(() => _selectedDriverId = value),
-                  validator: (value) => value == null ? "لطفا شناسه راننده را انتخاب کنید" : null,
-                ),
-                SizedBox(height: 10),
+                padding:
+                    EdgeInsets.fromLTRB(16, 16, 16, 80), // Added bottom padding
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Driver ID Dropdown
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          labelText: "انتخاب راننده",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        value: _selectedDriverId,
+                        items: _drivers.map((driver) {
+                          return DropdownMenuItem<String>(
+                            value: driver['DriverID'].toString(),
+                            child: Text(
+                                '${driver['FirstName'] ?? ''} ${driver['LastName'] ?? ''}'),
+                          );
+                        }).toList(),
+                        onChanged: (value) =>
+                            setState(() => _selectedDriverId = value),
+                        validator: (value) =>
+                            value == null ? "لطفا راننده را انتخاب کنید" : null,
+                      ),
+                      SizedBox(height: 10),
 
-                // Vehicle ID Dropdown
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    labelText: "شناسه وسیله نقلیه",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  value: _selectedVehicleId,
-                  items: _vehicles.map((vehicle) {
-                    return DropdownMenuItem<String>(
-                      value: vehicle['VehicleID'].toString(),
-                      child: Text(vehicle['VehicleName'] ?? ''), // Display vehicle name
-                    );
-                  }).toList(),
-                  onChanged: (value) => setState(() => _selectedVehicleId = value),
-                  validator: (value) => value == null ? "لطفا شناسه وسیله نقلیه را انتخاب کنید" : null,
-                ),
-                SizedBox(height: 10),
+                      // Vehicle ID Dropdown
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          labelText: "انتخاب وسیله نقلیه",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        value: _selectedVehicleId,
+                        items: _vehicles.map((vehicle) {
+                          return DropdownMenuItem<String>(
+                            value: vehicle['VehicleID'].toString(),
+                            child: Text(vehicle['VehicleName'] ?? ''),
+                          );
+                        }).toList(),
+                        onChanged: (value) =>
+                            setState(() => _selectedVehicleId = value),
+                        validator: (value) => value == null
+                            ? "لطفا وسیله نقلیه را انتخاب کنید"
+                            : null,
+                      ),
+                      SizedBox(height: 10),
 
-                // Cargo Type ID Dropdown
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                    labelText: "شناسه نوع بار",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  value: _selectedCargoTypeId,
-                  items: _cargoTypes.map((cargoType) {
-                    return DropdownMenuItem<String>(
-                      value: cargoType['CargoTypeID'].toString(),
-                      child: Text(cargoType['CargoTypeName'] ?? ''), // Display cargo type
-                    );
-                  }).toList(),
-                  onChanged: (value) => setState(() => _selectedCargoTypeId = value),
-                  validator: (value) => value == null ? "لطفا شناسه نوع بار را انتخاب کنید" : null,
-                ),
-                SizedBox(height: 10),
+                      // Cargo Type ID Dropdown
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          labelText: "انتخاب نوع بار",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        value: _selectedCargoTypeId,
+                        items: _cargoTypes.map((cargoType) {
+                          return DropdownMenuItem<String>(
+                            value: cargoType['CargoTypeID'].toString(),
+                            child: Text(cargoType['CargoTypeName'] ?? ''),
+                          );
+                        }).toList(),
+                        onChanged: (value) =>
+                            setState(() => _selectedCargoTypeId = value),
+                        validator: (value) => value == null
+                            ? "لطفا نوع بار را انتخاب کنید"
+                            : null,
+                      ),
+                      SizedBox(height: 10),
 
-                // Payment Type ID Dropdown
-                DropdownButtonFormField<String>( // Added
-                  decoration: InputDecoration(
-                    labelText: "شناسه وضعیت پرداخت",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  value: _selectedPaymentTypeId,
-                  items: _paymentTypes.map((paymentType) {
-                    return DropdownMenuItem<String>(
-                      value: paymentType['PaymentTypeID'].toString(),
-                      child: Text(paymentType['PaymentTypeName'] ?? ''), // Display payment type name
-                    );
-                  }).toList(),
-                  onChanged: (value) => setState(() => _selectedPaymentTypeId = value),
-                  validator: (value) => value == null ? "لطفا شناسه وضعیت پرداخت را انتخاب کنید" : null,
-                ),
-                SizedBox(height: 10),
+                      // Payment Type ID Dropdown
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          labelText: "انتخاب وضعیت پرداخت",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        value: _selectedPaymentTypeId,
+                        items: _paymentTypes.map((paymentType) {
+                          return DropdownMenuItem<String>(
+                            value: paymentType['PaymentTypeID'].toString(),
+                            child: Text(paymentType['PaymentTypeName'] ?? ''),
+                          );
+                        }).toList(),
+                        onChanged: (value) =>
+                            setState(() => _selectedPaymentTypeId = value),
+                        validator: (value) => value == null
+                            ? "لطفا وضعیت پرداخت را انتخاب کنید"
+                            : null,
+                      ),
+                      SizedBox(height: 10),
 
-                // Origin
-                TextFormField(
-                  controller: _originController,
-                  decoration: InputDecoration(
-                    labelText: "مبدا",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "لطفا مبدا را وارد کنید";
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
+                      // Origin
+                      TextFormField(
+                        controller: _originController,
+                        decoration: InputDecoration(
+                          labelText: "مبدا",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "لطفا مبدا را وارد کنید";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
 
-                // Destination
-                TextFormField(
-                  controller: _destinationController,
-                  decoration: InputDecoration(
-                    labelText: "مقصد",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "لطفا مقصد را وارد کنید";
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
+                      // Destination
+                      TextFormField(
+                        controller: _destinationController,
+                        decoration: InputDecoration(
+                          labelText: "مقصد",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "لطفا مقصد را وارد کنید";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
 
-                // Shipping Date
-                TextFormField(
-                  controller: _shippingDateController,
-                  decoration: InputDecoration(
-                    labelText: "تاریخ حمل",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "لطفا تاریخ حمل را وارد کنید";
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
+                      // Shipping Date
+                      TextFormField(
+                        controller: _shippingDateController,
+                        decoration: InputDecoration(
+                          labelText: "تاریخ حمل",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "لطفا تاریخ حمل را وارد کنید";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
 
-                // Weight
-                TextFormField(
-                  controller: _weightController,
-                  decoration: InputDecoration(
-                    labelText: "وزن",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "لطفا وزن را وارد کنید";
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 10),
+                      // Weight
+                      TextFormField(
+                        controller: _weightController,
+                        decoration: InputDecoration(
+                          labelText: "وزن",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "لطفا وزن را وارد کنید";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
 
-                // Price Per Ton
-                TextFormField(
-                  controller: _pricePerTonController,
-                  decoration: InputDecoration(
-                    labelText: "قیمت به ازای هر تن",
-                    labelStyle: TextStyle(color: AppTheme.secondaryColor),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppTheme.primaryColor),
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "لطفا قیمت به ازای هر تن را وارد کنید";
-                    }
-                    return null;
-                  },
-                ),
+                      // Price Per Ton
+                      TextFormField(
+                        controller: _pricePerTonController,
+                        decoration: InputDecoration(
+                          labelText: "قیمت به ازای هر تن",
+                          labelStyle: TextStyle(color: AppTheme.secondaryColor),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppTheme.primaryColor),
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "لطفا قیمت به ازای هر تن را وارد کنید";
+                          }
+                          return null;
+                        },
+                      ),
 
-                SizedBox(height: 20),
-              ],
-            ),
-          ),
-        ),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              ),
       ),
       floatingActionButton: SizedBox(
         width: MediaQuery.of(context).size.width - 48,

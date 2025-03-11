@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'app_theme.dart';
+import 'text_input_style.dart';
 
 class AddVehicleForm extends StatefulWidget {
   @override
@@ -29,7 +31,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('وسیله نقلیه با موفقیت افزوده شد'),
-            backgroundColor: Colors.green,
+            backgroundColor: AppTheme.successColor,
           ),
         );
         Navigator.pop(context);
@@ -37,7 +39,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('خطا در افزودن وسیله نقلیه'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppTheme.dangerColor,
           ),
         );
       }
@@ -49,9 +51,10 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     return Scaffold(
       appBar: AppBar(
         title: Text('افزودن وسیله نقلیه جدید',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                color: AppTheme.whiteColor, fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: Colors.blue.shade800,
+        backgroundColor: AppTheme.primaryColor,
         elevation: 0,
       ),
       body: Container(
@@ -59,7 +62,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade50, Colors.white],
+            colors: [AppTheme.lightColor, AppTheme.whiteColor],
           ),
         ),
         child: SingleChildScrollView(
@@ -97,7 +100,8 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                   child: ElevatedButton(
                     onPressed: _submitForm,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue.shade800,
+                      backgroundColor: AppTheme.primaryColor,
+                      foregroundColor: AppTheme.whiteColor,
                       padding: EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -108,7 +112,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppTheme.whiteColor,
                       ),
                     ),
                   ),
@@ -131,19 +135,9 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
       controller: controller,
       textDirection: TextDirection.rtl,
       textAlign: TextAlign.right,
-      decoration: InputDecoration(
+      decoration: TextInputStyle.getInputDecoration(
         labelText: label,
-        labelStyle: TextStyle(fontSize: 16),
-        prefixIcon: Icon(icon, color: Colors.blue.shade800),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.blue.shade200),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.blue.shade800, width: 2),
-        ),
-        contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        prefixIcon: icon,
       ),
       validator: validator,
     );
@@ -155,4 +149,4 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     _plateNumberController.dispose();
     super.dispose();
   }
-} 
+}

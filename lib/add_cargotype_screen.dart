@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'app_theme.dart';
+import 'text_input_style.dart';
+
 //نوع بار
 class AddCargoTypeScreen extends StatefulWidget {
   @override
@@ -27,16 +30,18 @@ class _AddCargoTypeScreenState extends State<AddCargoTypeScreen> {
           final responseData = json.decode(response.body);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(responseData['message'] ?? 'نوع بار با موفقیت افزوده شد'),
-              backgroundColor: Colors.green,
+              content: Text(
+                  responseData['message'] ?? 'نوع بار با موفقیت افزوده شد'),
+              backgroundColor: AppTheme.successColor,
             ),
           );
           Navigator.pop(context);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('خطا در افزودن نوع بار. کد وضعیت: ${response.statusCode}'),
-              backgroundColor: Colors.red,
+              content: Text(
+                  'خطا در افزودن نوع بار. کد وضعیت: ${response.statusCode}'),
+              backgroundColor: AppTheme.dangerColor,
             ),
           );
         }
@@ -44,7 +49,7 @@ class _AddCargoTypeScreenState extends State<AddCargoTypeScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('خطا در ارتباط با سرور: $e'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppTheme.dangerColor,
           ),
         );
       }
@@ -56,9 +61,10 @@ class _AddCargoTypeScreenState extends State<AddCargoTypeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('افزودن نوع بار',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                color: AppTheme.whiteColor, fontWeight: FontWeight.bold)),
         centerTitle: true,
-        backgroundColor: Colors.blue.shade800,
+        backgroundColor: AppTheme.primaryColor,
         elevation: 0,
       ),
       body: Container(
@@ -66,7 +72,7 @@ class _AddCargoTypeScreenState extends State<AddCargoTypeScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.blue.shade50, Colors.white],
+            colors: [AppTheme.lightColor, AppTheme.whiteColor],
           ),
         ),
         child: SingleChildScrollView(
@@ -92,7 +98,8 @@ class _AddCargoTypeScreenState extends State<AddCargoTypeScreen> {
                   child: ElevatedButton(
                     onPressed: _submitForm,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue.shade800,
+                      backgroundColor: AppTheme.primaryColor,
+                      foregroundColor: AppTheme.whiteColor,
                       padding: EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -103,7 +110,7 @@ class _AddCargoTypeScreenState extends State<AddCargoTypeScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppTheme.whiteColor,
                       ),
                     ),
                   ),
@@ -126,19 +133,9 @@ class _AddCargoTypeScreenState extends State<AddCargoTypeScreen> {
       controller: controller,
       textDirection: TextDirection.rtl,
       textAlign: TextAlign.right,
-      decoration: InputDecoration(
+      decoration: TextInputStyle.getInputDecoration(
         labelText: label,
-        labelStyle: TextStyle(fontSize: 16),
-        prefixIcon: Icon(icon, color: Colors.blue.shade800),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.blue.shade200),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.blue.shade800, width: 2),
-        ),
-        contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        prefixIcon: icon,
       ),
       validator: validator,
     );
@@ -149,4 +146,4 @@ class _AddCargoTypeScreenState extends State<AddCargoTypeScreen> {
     _cargoTypeNameController.dispose();
     super.dispose();
   }
-} 
+}
