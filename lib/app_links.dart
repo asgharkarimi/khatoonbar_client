@@ -1,5 +1,5 @@
 class AppLinks {
-  static const String baseUrl = "http://192.168.115.166/khatoonbar/api";
+  static const String baseUrl = "http://192.168.36.166/khatoonbar";
 
   static const String cargos = "$baseUrl/cargos.php";
   static const String cargoTypes = "$baseUrl/cargo_types.php";
@@ -10,5 +10,5 @@ class AppLinks {
   static const String transportRelations = "$baseUrl/transport_relations.php";
   static const String paymentTypes = "$baseUrl/payment_types.php";
   static const String imageBaseUrl =
-      "http://192.168.115.166/khatoonbar/uploads/";
+      "http://192.168.36.166/khatoonbar/uploads/";
 }

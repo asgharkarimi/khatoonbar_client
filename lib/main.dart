@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:khatoon_bar/report_expenses_screen.dart';
 import 'add_cargo_screen.dart';
 import 'add_customer_screen.dart';
 import 'add_expense_screen.dart';
@@ -8,7 +9,7 @@ import 'app_theme.dart';
 import 'add_driver_screen.dart';
 import 'add_edit_cargo_type_screen.dart';
 import 'add_edit_vehicle_screen.dart';
-import 'reporting_screen.dart';
+import 'report_income_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -52,7 +53,8 @@ class DashboardScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'داشبورد مدیریت',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         centerTitle: true,
         elevation: 0,
@@ -71,7 +73,6 @@ class DashboardScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-          
             Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
@@ -132,7 +133,7 @@ class DashboardScreen extends StatelessWidget {
                     'گزارش گیری هزینه ها',
                     Icons.trending_down,
                     Color(0xFF795548), // Brown
-                    ReportingScreen(), // Replace with your Expense Reporting Screen
+                    ReportExpensesScreen(), // Expense Reporting Screen
                   ),
                 ],
               ),
@@ -143,11 +144,13 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDashboardCard(BuildContext context, String title, IconData icon, Color color, Widget screen) {
+  Widget _buildDashboardCard(BuildContext context, String title, IconData icon,
+      Color color, Widget screen) {
     return Card(
       elevation: 5, // Reduced shadow intensity
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15), // Slightly less rounded corners
+        borderRadius:
+            BorderRadius.circular(15), // Slightly less rounded corners
       ),
       child: InkWell(
         onTap: () {
@@ -163,13 +166,17 @@ class DashboardScreen extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [color.withOpacity(0.8), color], // Adjusted gradient opacity
+              colors: [
+                color.withOpacity(0.8),
+                color
+              ], // Adjusted gradient opacity
             ),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 48, color: Colors.white), // Slightly smaller icon size
+              Icon(icon,
+                  size: 48, color: Colors.white), // Slightly smaller icon size
               SizedBox(height: 12), // Reduced spacing
               Text(
                 title,
@@ -187,7 +194,8 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDashboardButton(BuildContext context, String title, VoidCallback onPressed, Color color) {
+  Widget _buildDashboardButton(
+      BuildContext context, String title, VoidCallback onPressed, Color color) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
